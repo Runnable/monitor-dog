@@ -29,3 +29,57 @@ request('http://example.com', function(req, res) {
   timer.stop();
 });
 ```
+
+## Documentation
+
+### .set, .increment, .histogram, .gauge
+
+These methods behave exactly as you would expect on a regular
+[dogstatsd Client](https://www.npmjs.com/package/node-dogstatsd).
+
+### .timer(name, [startNow])
+
+Creates and returns new timer with the given `name`. Optional boolean
+`startNow` can be provided to start the timer at a later date using the
+`.start` method.
+
+##### Synchronous
+```js
+// Create the timer
+var sumTimer = monitor.timer('sum.time');
+
+// Perform a computation
+var sum = 0;
+for (var i = 0; i < 1000000; i++) {
+  sum += i;
+}
+
+// Call .stop() to send a histogram event named 'sum.time'
+// with the recorded duration...
+sumTimer.stop();
+```
+
+##### Asynchronous
+```js
+var requestTimer = monitor.timer('request.time');
+request('/some/endpoint', function (err, res) {
+  requestTimer.stop();
+});
+```
+
+##### Delayed Use
+```js
+var delayedTime = monitor.timer('delayed.timer', false);
+
+// ... Do some other stuff ...
+
+delayedTimer.start();
+
+// ... Do some more stuff ...
+
+delayedTimer.stop();
+```
+
+## License
+
+MIT
