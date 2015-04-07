@@ -1,0 +1,39 @@
+{
+  "name": "monitor-dog",
+  "version": "0.0.0",
+  "description": "A helpful wrapper for dogstatsd.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jshint lib/ && lab -v -c test/*"
+  },
+  "jshintConfig": {
+    "node": true,
+    "curly": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Runnable/monitor-dog.git"
+  },
+  "keywords": [
+    "dogstatsd",
+    "data",
+    "dog"
+  ],
+  "author": "Ryan Sandor Richards <ryan@runnable.com> (http://www.runnable.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Runnable/monitor-dog/issues"
+  },
+  "homepage": "https://github.com/Runnable/monitor-dog",
+  "devDependencies": {
+    "code": "^1.4.0",
+    "jshint": "^2.6.3",
+    "lab": "^5.5.1",
+    "sinon": "^1.14.1"
+  },
+  "dependencies": {
+    "101": "^0.14.1",
+    "loadenv": "^1.0.3",
+    "node-dogstatsd": "0.0.6"
+  }
+}
