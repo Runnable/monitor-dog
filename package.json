@@ -4,7 +4,7 @@
   "description": "A helpful wrapper for dogstatsd.",
   "main": "index.js",
   "scripts": {
-    "test": "jshint lib/ && lab -v -c test/*"
+    "test": "jshint index.js lib/ && lab -v -c test/*"
   },
   "jshintConfig": {
     "node": true,
