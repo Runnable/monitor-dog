@@ -40,6 +40,11 @@ describe('monitor-dog', function() {
         done();
       });
 
+      it('should use environment interval by default', function (done) {
+        expect(monitor.interval).to.equal(process.env.MONITOR_INTERVAL);
+        done();
+      });
+
       it('should construct a new monitor', function (done) {
         var custom = monitor.createMonitor();
         expect(custom.host).to.exist();
@@ -84,7 +89,16 @@ describe('monitor-dog', function() {
         expect(custom.prefix).to.be.null();
         process.env.MONITOR_PREFIX = envMonitorPrefix;
         done();
-      })
+      });
+
+      it('should use user defined interval when specified', function (done) {
+        var customInterval = 2000;
+        var custom = monitor.createMonitor({
+          interval: customInterval
+        });
+        expect(custom.interval).to.equal(customInterval);
+        done();
+      });
     });
 
     describe('helper aliases', function () {
@@ -156,6 +170,22 @@ describe('monitor-dog', function() {
         });
 
         process.env.MONITOR_PREFIX = envMonitorPrefix;
+        done();
+      });
+
+      it('should call socketsMonitor.start', function (done) {
+        var custom = monitor.createMonitor();
+        var stub = sinon.stub(custom.socketsMonitor, 'start');
+        custom.startSocketsMonitor();
+        expect(stub.calledOnce).to.be.true();
+        done();
+      });
+
+      it('should call socketsMonitor.stop', function (done) {
+        var custom = monitor.createMonitor();
+        var stub = sinon.stub(custom.socketsMonitor, 'stop');
+        custom.stopSocketsMonitor();
+        expect(stub.calledOnce).to.be.true();
         done();
       });
     });

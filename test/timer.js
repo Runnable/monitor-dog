@@ -77,6 +77,6 @@ describe('monitor-dog', function() {
       expect(timer.callback.callCount).to.equal(0);
       timer.callback.restore();
       done();
-    })
+    });
   }); // end 'timer'
 }); // end 'monitor-dog'
