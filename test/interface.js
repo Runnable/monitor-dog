@@ -42,15 +42,27 @@ describe('monitor-dog', function() {
       done();
     });
 
-    it('should epose a `gauge` method', function (done) {
+    it('should expose a `gauge` method', function (done) {
       expect(monitor.gauge).to.exist();
       expect(typeof monitor.gauge).to.equal('function');
       done();
     });
 
-    it('should epose a `timer` method', function (done) {
+    it('should expose a `timer` method', function (done) {
       expect(monitor.timer).to.exist();
       expect(typeof monitor.timer).to.equal('function');
+      done();
+    });
+
+    it('should expose a `startSocketsMonitor` method', function (done) {
+      expect(monitor.startSocketsMonitor).to.exist();
+      expect(typeof monitor.startSocketsMonitor).to.equal('function');
+      done();
+    });
+
+    it('should expose a `stopSocketsMonitor` method', function (done) {
+      expect(monitor.stopSocketsMonitor).to.exist();
+      expect(typeof monitor.stopSocketsMonitor).to.equal('function');
       done();
     });
 
@@ -69,5 +81,22 @@ describe('monitor-dog', function() {
         done();
       });
     });
+
+    describe('sockets-monitor', function () {
+      it('should expose a `start` method', function (done) {
+        var socketsMonitor = monitor.socketsMonitor;
+        expect(socketsMonitor.start).to.exist();
+        expect(typeof socketsMonitor.start).to.equal('function');
+        done();
+      });
+
+      it('should expose a `stop` method', function (done) {
+        var socketsMonitor = monitor.socketsMonitor;
+        expect(socketsMonitor.stop).to.exist();
+        expect(typeof socketsMonitor.stop).to.equal('function');
+        done();
+      });
+    });
+
   }); // end 'interface'
 }); // end 'monitor-dog'
