@@ -172,6 +172,22 @@ describe('monitor-dog', function() {
         process.env.MONITOR_PREFIX = envMonitorPrefix;
         done();
       });
+
+      it('should call socketsMonitor.start', function (done) {
+        var custom = monitor.createMonitor();
+        var stub = sinon.stub(custom.socketsMonitor, 'start');
+        custom.startSocketsMonitor();
+        expect(stub.calledOnce).to.be.true();
+        done();
+      });
+
+      it('should call socketsMonitor.stop', function (done) {
+        var custom = monitor.createMonitor();
+        var stub = sinon.stub(custom.socketsMonitor, 'stop');
+        custom.stopSocketsMonitor();
+        expect(stub.calledOnce).to.be.true();
+        done();
+      });
     });
   }); // end 'behavior'
 }); // end 'monitor-dog'
