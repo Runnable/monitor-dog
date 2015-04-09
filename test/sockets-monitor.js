@@ -81,7 +81,7 @@ describe('monitor-dog', function() {
           sinon.match.number,
           sinon.match.array)).to.equal(true);
         done();
-      }, 205);
+      }, 210);
     });
 
   }); // end 'sockets-monitor'
