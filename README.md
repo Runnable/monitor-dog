@@ -80,7 +80,7 @@ delayedTimer.start();
 delayedTimer.stop();
 ```
 
-##### Sockets data monitoring
+### .startSocketsMonitor()
 
 Automatically track number of open & pending sockets and open files.
 
