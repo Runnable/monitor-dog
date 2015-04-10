@@ -93,6 +93,7 @@ describe('monitor-dog', function() {
       custom.startSocketsMonitor();
       setTimeout(function () {
         expect(stub.callCount).to.equal(8);
+        child.exec.restore();
         done();
       }, 210);
     });
