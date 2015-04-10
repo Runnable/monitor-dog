@@ -80,6 +80,22 @@ delayedTimer.start();
 delayedTimer.stop();
 ```
 
+##### Sockets data monitoring
+
+Automatically track number of open & pending sockets and open files.
+
+
+```js
+// start monitoring once you start web server
+// default interval defined by `process.env.MONITOR_INTERVAL`
+monitor.startSocketsMonitor();
+
+// stop monitoring before stopping web server
+monitor.stopSocketsMonitor();
+
+```
+
+
 ## License
 
 MIT
