@@ -112,7 +112,7 @@ describe('monitor-dog', function() {
       clock.tick(ticks * interval + 1);
 
       // This should not make gauge call for open files
-      expect(stub.callCount).to.equal(ticks * (numSockets + numRequests ));
+      expect(stub.callCount).to.equal(ticks * (numSockets + numRequests));
 
       child.exec.restore();
       clock.restore();
