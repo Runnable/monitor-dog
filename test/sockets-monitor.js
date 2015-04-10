@@ -10,6 +10,7 @@ var Code = require('code');
 var expect = Code.expect;
 var sinon = require('sinon');
 var http = require('http');
+var child = require('child_process');
 
 require('loadenv')('monitor-dog');
 var monitor = require('../index.js');
@@ -74,7 +75,6 @@ describe('monitor-dog', function() {
       setTimeout(function () {
         // 3 + 6 + 3
         expect(stub.callCount).to.equal(12);
-
         expect(stub.calledWith(
           sinon.match.string,
           sinon.match.number,
@@ -84,5 +84,17 @@ describe('monitor-dog', function() {
       }, 210);
     });
 
+    it('should gracefully handle errors in child.exec', function (done) {
+      var custom = monitor.createMonitor({interval: 50, prefix: 'git'});
+      var stub = sinon.stub(custom, 'gauge');
+      sinon.stub(child, 'exec').yields(new Error('Error'));
+      http.globalAgent.sockets = [{id: 1}];
+      http.globalAgent.requests = [{id: 3}];
+      custom.startSocketsMonitor();
+      setTimeout(function () {
+        expect(stub.callCount).to.equal(8);
+        done();
+      }, 210);
+    });
   }); // end 'sockets-monitor'
 }); // end 'monitor-dog'
