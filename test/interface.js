@@ -36,6 +36,12 @@ describe('monitor-dog', function() {
       done();
     });
 
+    it('should expose a `decrement` method', function (done) {
+      expect(monitor.increment).to.exist();
+      expect(typeof monitor.increment).to.equal('function');
+      done();
+    });
+
     it('should expose a `histogram` method', function (done) {
       expect(monitor.histogram).to.exist();
       expect(typeof monitor.histogram).to.equal('function');
