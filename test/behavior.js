@@ -144,6 +144,43 @@ describe('monitor-dog', function() {
         done();
       });
 
+      it('should convert replace colons in the tag keys/values with _', function (done) {
+        var key = 'example.counter';
+        var keyWithPrefix = monitor.prefix + '.' + key;
+        var value = 42;
+        var sampleRate = '1d';
+        var tags = {
+          'env:x:y': 'prod:1',
+          count: 112
+        };
+        var stub = monitor.client.increment;
+        monitor.increment(key, value, sampleRate, tags);
+        expect(stub.calledOnce).to.be.true();
+        expect(stub.calledWith(keyWithPrefix, value, sampleRate, ['env_x_y:prod_1', 'count:112'])).to.be.true();
+        done();
+      });
+
+      it('should ignore tags with non-plain values', function (done) {
+        var key = 'example.counter';
+        var keyWithPrefix = monitor.prefix + '.' + key;
+        var value = 42;
+        var sampleRate = '1d';
+        var tags = {
+          env: 'prod',
+          count: 112,
+          foo: true,
+          arr: [1, 2, 3],
+          obj: {
+            x: 1
+          }
+        };
+        var stub = monitor.client.increment;
+        monitor.increment(key, value, sampleRate, tags);
+        expect(stub.calledOnce).to.be.true();
+        expect(stub.calledWith(keyWithPrefix, value, sampleRate, ['foo:true', 'env:prod', 'count:112'])).to.be.true();
+        done();
+      });
+
       it('should send counter decrements through datadog', function (done) {
         var key = 'example.counter';
         var keyWithPrefix = monitor.prefix + '.' + key;
