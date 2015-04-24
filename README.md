@@ -19,6 +19,12 @@ var monitor = require('monitor-dog');
 // Trigger an increment (`myProject.requests`)
 monitor.increment('requests');
 
+// Trigger an increment with additional parameters
+monitor.increment('requests', 1, ['env:prod', 'host': '127.0.0.1']);
+
+// Trigger an increment with tags as object
+monitor.increment('requests', 1, {env: 'prod', host: '127.0.0.1'});
+
 // Trigger a gauge event (`myProject.404s`)
 monitor.gauge('404s');
 
@@ -32,7 +38,7 @@ request('http://example.com', function(req, res) {
 
 ## Documentation
 
-### .set, .increment, .histogram, .gauge
+### .set, .increment, .decrement, .histogram, .gauge
 
 These methods behave exactly as you would expect on a regular
 [dogstatsd Client](https://www.npmjs.com/package/node-dogstatsd).
