@@ -4,9 +4,10 @@
   "description": "A helpful wrapper for dogstatsd.",
   "main": "index.js",
   "scripts": {
-    "test": "npm run jshint && npm run jsinspect && lab -v -c test/*",
+    "test": "npm run jshint && npm run jsinspect && npm run unit",
     "jshint": "jshint index.js lib/",
-    "jsinspect": "jsinspect lib/"
+    "jsinspect": "jsinspect lib/",
+    "unit": "lab -v -c test/* -a code"
   },
   "jshintConfig": {
     "node": true,
