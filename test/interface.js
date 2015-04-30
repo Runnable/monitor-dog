@@ -72,6 +72,12 @@ describe('monitor-dog', function() {
       done();
     });
 
+    it('should expose a `captureStream` method', function (done) {
+      expect(monitor.captureStream).to.exist();
+      expect(typeof monitor.captureStream).to.equal('function');
+      done();
+    });
+
     describe('timer', function () {
       it('should expose a `start` method', function (done) {
         var timer = monitor.timer('timer');
