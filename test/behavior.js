@@ -269,7 +269,7 @@ describe('monitor-dog', function() {
       it('should capture stream events', function (done) {
         var custom = monitor.createMonitor();
         var stream = new EventEmitter();
-        custom.captureStream('my-stream', stream);
+        custom.captureStreamEvents('my-stream', stream);
         var stub = sinon.stub(custom, 'increment');
         stream.emit('open');
         stream.emit('data');
@@ -286,14 +286,14 @@ describe('monitor-dog', function() {
       it('should not capture stream if streamName is null', function (done) {
         var custom = monitor.createMonitor();
         var stream = new EventEmitter();
-        var result = custom.captureStream(null, stream);
+        var result = custom.captureStreamEvents(null, stream);
         expect(result).to.be.false();
         done();
       });
 
       it('should not capture stream if stream is null', function (done) {
         var custom = monitor.createMonitor();
-        var result = custom.captureStream('my-stream', null);
+        var result = custom.captureStreamEvents('my-stream', null);
         expect(result).to.be.false();
         done();
       });

@@ -72,9 +72,9 @@ describe('monitor-dog', function() {
       done();
     });
 
-    it('should expose a `captureStream` method', function (done) {
-      expect(monitor.captureStream).to.exist();
-      expect(typeof monitor.captureStream).to.equal('function');
+    it('should expose a `captureStreamEvents` method', function (done) {
+      expect(monitor.captureStreamEvents).to.exist();
+      expect(typeof monitor.captureStreamEvents).to.equal('function');
       done();
     });
 

@@ -101,7 +101,7 @@ monitor.stopSocketsMonitor();
 
 ```
 
-### .captureStream()
+### .captureStreamEvents()
 
 Capture stream events: `open`, `data`, `error`, `end`.
 
