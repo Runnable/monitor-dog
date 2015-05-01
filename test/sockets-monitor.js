@@ -16,6 +16,7 @@ var child = require('child_process');
 
 require('loadenv')('monitor-dog');
 var monitor = require('../index.js');
+var SocketsMonitor = require('../lib/sockets-monitor');
 var dogstatsd = require('./fixtures/dogstatsd');
 
 var ctx = {};
@@ -31,6 +32,32 @@ describe('monitor-dog', function() {
       dogstatsd.restoreAll();
       http.globalAgent = ctx.originalGlobalAgent;
       done();
+    });
+
+    describe('constructor', function() {
+      it('should use given socket prefix', function(done) {
+        var socketMonitor = new SocketsMonitor({}, 'prefix', 1000);
+        expect(socketMonitor.prefix).to.equal('prefix');
+        done();
+      });
+
+      it('should use a default socket prefix if none given', function(done) {
+        var socketMonitor = new SocketsMonitor({}, null, 1000);
+        expect(socketMonitor.prefix).to.equal('socket');
+        done();
+      });
+
+      it('should use given interval', function(done) {
+        var socketMonitor = new SocketsMonitor({}, 'prefix', 1000);
+        expect(socketMonitor.interval).to.equal(1000);
+        done();
+      });
+
+      it('should use default interval if none given', function(done) {
+        var socketMonitor = new SocketsMonitor({ interval: 120 }, 'prefix');
+        expect(socketMonitor.interval).to.equal(120);
+        done();
+      });
     });
 
     it('should not start started monitor', function (done) {
