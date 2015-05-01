@@ -1,3 +1,5 @@
+'use strict';
+
 var Lab = require('lab');
 var lab = exports.lab = Lab.script();
 var describe = lab.describe;
@@ -75,7 +77,7 @@ describe('monitor-dog', function() {
       var custom = monitor.createMonitor({interval: interval, prefix: 'git'});
       var stub = sinon.stub(custom, 'gauge');
       var clock = sinon.useFakeTimers();
-      sinon.stub(child, 'exec').yields(null, "10");
+      sinon.stub(child, 'exec').yields(null, '10');
 
       // Start the monitor and push the clock forward a few ticks...
       custom.startSocketsMonitor();

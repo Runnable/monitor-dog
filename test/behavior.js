@@ -1,5 +1,6 @@
 'use strict';
 
+var EventEmitter = require('events').EventEmitter;
 var Lab = require('lab');
 var lab = exports.lab = Lab.script();
 var describe = lab.describe;
@@ -262,6 +263,38 @@ describe('monitor-dog', function() {
         expect(tags.length).to.equal(2);
         expect(tags[0]).to.equal('env:test');
         expect(tags[1]).to.equal('count:112');
+        done();
+      });
+
+      it('should capture stream events', function (done) {
+        var custom = monitor.createMonitor();
+        var stream = new EventEmitter();
+        custom.captureStreamEvents('my-stream', stream);
+        var stub = sinon.stub(custom, 'increment');
+        stream.emit('open');
+        stream.emit('data');
+        stream.emit('error');
+        stream.emit('end');
+        expect(stub.getCalls().length).to.equal(4);
+        expect(stub.getCall(0).args[0]).to.equal('my-stream.open');
+        expect(stub.getCall(1).args[0]).to.equal('my-stream.data');
+        expect(stub.getCall(2).args[0]).to.equal('my-stream.error');
+        expect(stub.getCall(3).args[0]).to.equal('my-stream.end');
+        done();
+      });
+
+      it('should not capture stream if streamName is null', function (done) {
+        var custom = monitor.createMonitor();
+        var stream = new EventEmitter();
+        var result = custom.captureStreamEvents(null, stream);
+        expect(result).to.be.false();
+        done();
+      });
+
+      it('should not capture stream if stream is null', function (done) {
+        var custom = monitor.createMonitor();
+        var result = custom.captureStreamEvents('my-stream', null);
+        expect(result).to.be.false();
         done();
       });
 

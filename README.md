@@ -101,6 +101,16 @@ monitor.stopSocketsMonitor();
 
 ```
 
+### .captureStreamEvents()
+
+Capture stream events: `open`, `data`, `error`, `end`.
+
+```js
+
+monitor.captureStream('some-name', yourStream);
+
+```
+
 
 ## License
 
