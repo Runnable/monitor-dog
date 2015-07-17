@@ -36,7 +36,35 @@ request('http://example.com', function(req, res) {
 });
 ```
 
-## Documentation
+## Interval Monitoring
+Creating specialized periodic interval monitors (similar to the sockets monitor)
+is fairly straight-forward. Here's an example of how it is done:
+
+```js
+var monitor = require('monitor-dog');
+var IntervalMonitor = require('monitor-dog/lib/interval-monitor');
+var util = require('util');
+
+/**
+ * 1. Subclass the IntervalMonitor class
+ */
+function MyCustomMonitor = function(monitor, prefix, interval) {
+  IntervalMonitor.call(this, monitor, prefix, interval);
+}
+util.inherits(MyCustomMonitor, IntervalMonitor);
+
+/**
+ * 2. Define your run function to periodically monitor what you wish
+ */
+MyCustomMonitor.prototype.run = function() {
+  // ... Perform custom periodic reporting here using this.monitor
+}
+
+// 3. Instantiate and start your new interval monitor!
+(new MyCustomMonitor(monitor)).start();
+```
+
+## API Documentation
 
 ### .set, .increment, .decrement, .histogram, .gauge
 
@@ -86,10 +114,9 @@ delayedTimer.start();
 delayedTimer.stop();
 ```
 
-### .startSocketsMonitor()
+### .startSocketsMonitor(), .stopSocketsMonitor()
 
 Automatically track number of open & pending sockets and open files.
-
 
 ```js
 // start monitoring once you start web server
@@ -98,7 +125,6 @@ monitor.startSocketsMonitor();
 
 // stop monitoring before stopping web server
 monitor.stopSocketsMonitor();
-
 ```
 
 ### .captureStreamEvents()
@@ -106,11 +132,8 @@ monitor.stopSocketsMonitor();
 Capture stream events: `open`, `data`, `error`, `end`.
 
 ```js
-
 monitor.captureStream('some-name', yourStream);
-
 ```
-
 
 ## License
 

@@ -46,51 +46,6 @@ describe('monitor-dog', function() {
         expect(socketMonitor.prefix).to.equal('socket');
         done();
       });
-
-      it('should use given interval', function(done) {
-        var socketMonitor = new SocketsMonitor({}, 'prefix', 1000);
-        expect(socketMonitor.interval).to.equal(1000);
-        done();
-      });
-
-      it('should use default interval if none given', function(done) {
-        var socketMonitor = new SocketsMonitor({ interval: 120 }, 'prefix');
-        expect(socketMonitor.interval).to.equal(120);
-        done();
-      });
-    });
-
-    it('should not start started monitor', function (done) {
-      var custom = monitor.createMonitor({interval: 50, prefix: 'git'});
-      expect(custom.socketsMonitor.intervalId).to.not.exist();
-      custom.startSocketsMonitor();
-      var oldInterval = custom.socketsMonitor.intervalId;
-      expect(oldInterval).to.exist();
-      custom.startSocketsMonitor();
-      expect(oldInterval).to.equal(custom.socketsMonitor.intervalId);
-      done();
-    });
-
-    it('should stop monitor', function (done) {
-      var custom = monitor.createMonitor({interval: 50, prefix: 'git'});
-      expect(custom.socketsMonitor.intervalId).to.not.exist();
-      custom.startSocketsMonitor();
-      expect(custom.socketsMonitor.intervalId).to.exist();
-      custom.stopSocketsMonitor();
-      expect(custom.socketsMonitor.intervalId).to.not.exist();
-      done();
-    });
-
-    it('should not stop stopped monitor', function (done) {
-      var custom = monitor.createMonitor({interval: 50, prefix: 'git'});
-      expect(custom.socketsMonitor.intervalId).to.not.exist();
-      custom.startSocketsMonitor();
-      expect(custom.socketsMonitor.intervalId).to.exist();
-      custom.stopSocketsMonitor();
-      expect(custom.socketsMonitor.intervalId).to.not.exist();
-      custom.stopSocketsMonitor();
-      expect(custom.socketsMonitor.intervalId).to.not.exist();
-      done();
     });
 
     it('should start monitor and report open files data & sockets info', function (done) {
