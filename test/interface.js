@@ -78,6 +78,11 @@ describe('monitor-dog', function() {
       done();
     });
 
+    it('should expose a `event` method', function(done) {
+      expect(monitor.event).to.be.a.function();
+      done();
+    });
+
     describe('timer', function () {
       it('should expose a `start` method', function (done) {
         var timer = monitor.timer('timer');
