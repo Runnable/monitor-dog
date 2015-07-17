@@ -31,12 +31,12 @@
   "devDependencies": {
     "code": "^1.4.0",
     "jshint": "^2.6.3",
-    "jsinspect": "^0.5.0",
+    "jsinspect": "^0.6.1",
     "lab": "^5.5.1",
     "sinon": "^1.14.1"
   },
   "dependencies": {
-    "101": "^0.16.1",
+    "101": "^1.0.0",
     "loadenv": "^1.0.3",
     "node-dogstatsd": "0.0.6"
   }
