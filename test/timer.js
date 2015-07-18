@@ -13,72 +13,111 @@ var expect = Code.expect;
 var sinon = require('sinon');
 
 require('loadenv')('monitor-dog');
-var monitor = require('../index.js');
-var dogstatsd = require('./fixtures/dogstatsd');
+var Timer = require('../lib/timer.js');
 
-describe('monitor-dog', function() {
-  describe('timer', function() {
+describe('Timer', function() {
+  describe('interface', function () {
+    it('should expose a `start` method', function (done) {
+      expect(Timer.prototype.start).to.be.a.function();
+      done();
+    });
+
+    it('should expose a `stop` method', function (done) {
+      expect(Timer.prototype.stop).to.be.a.function();
+      done();
+    });
+  }); // end 'interface'
+
+  describe('constructor', function() {
+    it('should start the timer', function(done) {
+      sinon.spy(Timer.prototype, 'start');
+      var t = new Timer(function() {});
+      expect(Timer.prototype.start.calledOnce).to.be.true();
+      Timer.prototype.start.restore();
+      done();
+    });
+
+    it('should start the timer when explicitly told to do so', function(done) {
+      sinon.spy(Timer.prototype, 'start');
+      var t = new Timer(function() {}, true);
+      expect(Timer.prototype.start.calledOnce).to.be.true();
+      Timer.prototype.start.restore();
+      done();
+    });
+
+    it('should not start the timer when instructed', function(done) {
+      sinon.spy(Timer.prototype, 'start');
+      var t = new Timer(function() {}, false);
+      expect(Timer.prototype.start.callCount).to.equal(0);
+      Timer.prototype.start.restore();
+      done();
+    });
+  }); // end 'constructor'
+
+  describe('start', function() {
+    var clock;
+    var timer;
+
     beforeEach(function (done) {
-      dogstatsd.stubAll();
+      clock = sinon.useFakeTimers();
+      timer = new Timer(function() {}, false);
       done();
     });
 
     afterEach(function (done) {
-      dogstatsd.restoreAll();
+      clock.restore();
       done();
     });
 
-    it('should start the timer by default', function (done) {
-      var timer = monitor.timer('timer');
-      expect(timer.startDate).to.exist();
-      done();
-    });
-
-    it('should not start the timer if instructed to not do so', function (done) {
-      var timer = monitor.timer('timer', false);
-      expect(timer.startDate).to.not.exist();
-      done();
-    });
-
-    it('should call client histogram method with correct name when stopped', function (done) {
-      var timerName = 'timer';
-      monitor.client.histogram.restore();
-      sinon.stub(monitor.client, 'histogram', function (name, duration) {
-        expect(name).to.equal(monitor.prefix + '.' + timerName);
-        done();
-      });
-      var timer = monitor.timer(timerName);
-      timer.stop();
-    });
-
-    it('should report a realistic duration when stopped', function (done) {
-      var duration = 60;
-      var timer = monitor.timer('timer');
-      sinon.stub(timer, 'callback', function (duration) {
-        expect(duration).about(duration, 15);
-        done();
-      });
-      setTimeout(function () {
-        timer.stop();
-      }, duration);
-    });
-
-    it('should not attempt to start a timer multiple times', function (done) {
-      var timer = monitor.timer('timer', false);
+    it('should set the start date', function(done) {
+      expect(timer.startDate).to.be.null();
       timer.start();
-      var originalDate = timer.startDate;
-      timer.start();
-      expect(timer.startDate).to.equal(originalDate);
+      expect(timer.startDate).to.not.be.null();
       done();
     });
 
-    it('should not execute the callback the timer is stopped before being started', function (done) {
-      var timer = monitor.timer('timer', false);
-      sinon.stub(timer, 'callback');
+    it('should not set the date if called multiple times', function(done) {
+      timer.start();
+      var date = timer.startDate;
+      clock.tick(3600);
+      timer.start();
+      timer.start();
+      timer.start();
+      expect(timer.startDate).to.equal(date);
+      done();
+    });
+  }); // end 'start'
+
+  describe('stop', function() {
+    var clock;
+    var timer;
+
+    beforeEach(function (done) {
+      clock = sinon.useFakeTimers();
+      timer = new Timer(function() {}, false);
+      sinon.spy(timer, 'callback');
+      done();
+    });
+
+    afterEach(function (done) {
+      clock.restore();
+      done();
+    });
+
+    it('should not execute the callback if not started', function(done) {
       timer.stop();
       expect(timer.callback.callCount).to.equal(0);
-      timer.callback.restore();
       done();
     });
-  }); // end 'timer'
-}); // end 'monitor-dog'
+
+    it('should execute the callback with the duration', function(done) {
+      var duration = 13371;
+      timer.start();
+      clock.tick(duration);
+      timer.stop();
+      expect(timer.callback.calledOnce).to.be.true();
+      expect(timer.callback.calledWith(duration)).to.be.true();
+      done();
+    });
+  }); // end 'stop'
+}); // end 'Timer'

@@ -13,10 +13,10 @@ var expect = Code.expect;
 var sinon = require('sinon');
 
 require('loadenv')('monitor-dog');
-var monitor = require('../index.js');
-var dogstatsd = require('./fixtures/dogstatsd');
+var monitor = require('../../index.js');
+var dogstatsd = require('../fixtures/dogstatsd');
 
-describe('monitor-dog', function() {
+describe('Monitor', function() {
   describe('interface', function() {
     it('should expose a `createMonitor` factory method', function (done) {
       expect(monitor.createMonitor).to.exist();
@@ -78,20 +78,9 @@ describe('monitor-dog', function() {
       done();
     });
 
-    describe('timer', function () {
-      it('should expose a `start` method', function (done) {
-        var timer = monitor.timer('timer');
-        expect(timer.start).to.exist();
-        expect(typeof timer.start).to.equal('function');
-        done();
-      });
-
-      it('should expose a `stop` method', function (done) {
-        var timer = monitor.timer('timer');
-        expect(timer.stop).to.exist();
-        expect(typeof timer.stop).to.equal('function');
-        done();
-      });
+    it('should expose a `event` method', function(done) {
+      expect(monitor.event).to.be.a.function();
+      done();
     });
 
     describe('sockets-monitor', function () {
@@ -109,6 +98,5 @@ describe('monitor-dog', function() {
         done();
       });
     });
-
   }); // end 'interface'
-}); // end 'monitor-dog'
+}); // end 'monitor'

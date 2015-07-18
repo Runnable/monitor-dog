@@ -1,7 +1,9 @@
 'use strict';
 
 var monitor = require('../../index.js');
-var clientMethods = ['set', 'increment', 'decrement', 'histogram', 'gauge'];
+var clientMethods = [
+  'set', 'increment', 'decrement', 'histogram', 'gauge', 'send_data'
+];
 var sinon = require('sinon');
 
 /**
