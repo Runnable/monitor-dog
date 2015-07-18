@@ -60,11 +60,12 @@ describe('Monitor', function() {
     it('should correctly format a basic event', function(done) {
       var title = 'title';
       var text = 'this is the text';
-      var expectedFormat = '_e{' + title.length + ',' + text.length + '}:' +
+      var expected = '_e{' + title.length + ',' + text.length + '}:' +
         title + '|' + text;
       monitor.event({ title: title, text: text });
-      expect(monitor.client.send_data.calledWith(expectedFormat))
-        .to.be.true();
+      expect(monitor.client.send_data.calledOnce).to.be.true();
+      expect(monitor.client.send_data.firstCall.args[0].toString())
+        .to.equal(expected);
       done();
     });
 
@@ -80,7 +81,9 @@ describe('Monitor', function() {
         date_happened: date_happened
       };
       monitor.event(options);
-      expect(monitor.client.send_data.calledWith(expected)).to.be.true();
+      expect(monitor.client.send_data.calledOnce).to.be.true();
+      expect(monitor.client.send_data.firstCall.args[0].toString())
+        .to.equal(expected);
       done();
     });
 
@@ -96,7 +99,9 @@ describe('Monitor', function() {
         date_happened: date_happened
       };
       monitor.event(options);
-      expect(monitor.client.send_data.calledWith(expected)).to.be.true();
+      expect(monitor.client.send_data.calledOnce).to.be.true();
+      expect(monitor.client.send_data.firstCall.args[0].toString())
+        .to.equal(expected);
       done();
     });
 
@@ -112,7 +117,9 @@ describe('Monitor', function() {
         hostname: hostname
       };
       monitor.event(options);
-      expect(monitor.client.send_data.calledWith(expected)).to.be.true();
+      expect(monitor.client.send_data.calledOnce).to.be.true();
+      expect(monitor.client.send_data.firstCall.args[0].toString())
+        .to.equal(expected);
       done();
     });
 
@@ -128,7 +135,9 @@ describe('Monitor', function() {
         hostname: hostname
       };
       monitor.event(options);
-      expect(monitor.client.send_data.calledWith(expected)).to.be.true();
+      expect(monitor.client.send_data.calledOnce).to.be.true();
+      expect(monitor.client.send_data.firstCall.args[0].toString())
+        .to.equal(expected);
       done();
     });
 
@@ -144,7 +153,9 @@ describe('Monitor', function() {
         aggregation_key: aggregation_key
       };
       monitor.event(options);
-      expect(monitor.client.send_data.calledWith(expected)).to.be.true();
+      expect(monitor.client.send_data.calledOnce).to.be.true();
+      expect(monitor.client.send_data.firstCall.args[0].toString())
+        .to.equal(expected);
       done();
     });
 
@@ -160,7 +171,9 @@ describe('Monitor', function() {
         aggregation_key: aggregation_key
       };
       monitor.event(options);
-      expect(monitor.client.send_data.calledWith(expected)).to.be.true();
+      expect(monitor.client.send_data.calledOnce).to.be.true();
+      expect(monitor.client.send_data.firstCall.args[0].toString())
+        .to.equal(expected);
       done();
     });
 
@@ -177,7 +190,8 @@ describe('Monitor', function() {
           priority: priority
         };
         monitor.event(options);
-        expect(monitor.client.send_data.calledWith(expected)).to.be.true();
+        expect(monitor.client.send_data.lastCall.args[0].toString())
+          .to.equal(expected);
       });
       done();
     });
@@ -193,7 +207,9 @@ describe('Monitor', function() {
         priority: 'not a valid priority'
       };
       monitor.event(options);
-      expect(monitor.client.send_data.calledWith(expected)).to.be.true();
+      expect(monitor.client.send_data.calledOnce).to.be.true();
+      expect(monitor.client.send_data.firstCall.args[0].toString())
+        .to.equal(expected);
       done();
     });
 
@@ -208,7 +224,9 @@ describe('Monitor', function() {
         priority: { schrrooo: 'slslmmggggrrrggf' }
       };
       monitor.event(options);
-      expect(monitor.client.send_data.calledWith(expected)).to.be.true();
+      expect(monitor.client.send_data.calledOnce).to.be.true();
+      expect(monitor.client.send_data.firstCall.args[0].toString())
+        .to.equal(expected);
       done();
     });
 
@@ -225,7 +243,8 @@ describe('Monitor', function() {
           alert_type: type
         };
         monitor.event(options);
-        expect(monitor.client.send_data.calledWith(expected)).to.be.true();
+        expect(monitor.client.send_data.lastCall.args[0].toString())
+          .to.equal(expected);
       });
       done();
     });
@@ -242,7 +261,9 @@ describe('Monitor', function() {
         alert_type: alert_type
       };
       monitor.event(options);
-      expect(monitor.client.send_data.calledWith(expected)).to.be.true();
+      expect(monitor.client.send_data.calledOnce).to.be.true();
+      expect(monitor.client.send_data.firstCall.args[0].toString())
+        .to.equal(expected);
       done();
     });
 
@@ -258,7 +279,9 @@ describe('Monitor', function() {
         alert_type: alert_type
       };
       monitor.event(options);
-      expect(monitor.client.send_data.calledWith(expected)).to.be.true();
+      expect(monitor.client.send_data.calledOnce).to.be.true();
+      expect(monitor.client.send_data.firstCall.args[0].toString())
+        .to.equal(expected);
       done();
     });
 
@@ -273,7 +296,9 @@ describe('Monitor', function() {
         tags: ['alpha', 'beta:sweet', 'vallhalla']
       };
       monitor.event(options);
-      expect(monitor.client.send_data.calledWith(expected)).to.be.true();
+      expect(monitor.client.send_data.calledOnce).to.be.true();
+      expect(monitor.client.send_data.firstCall.args[0].toString())
+        .to.equal(expected);
       done();
     });
 
@@ -288,7 +313,9 @@ describe('Monitor', function() {
         tags: 'durnp'
       };
       monitor.event(options);
-      expect(monitor.client.send_data.calledWith(expected)).to.be.true();
+      expect(monitor.client.send_data.calledOnce).to.be.true();
+      expect(monitor.client.send_data.firstCall.args[0].toString())
+        .to.equal(expected);
       done();
     });
   }); // end 'event'
