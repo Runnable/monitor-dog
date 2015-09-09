@@ -20,13 +20,16 @@ var monitor = require('monitor-dog');
 monitor.increment('requests');
 
 // Trigger an increment with additional parameters
-monitor.increment('requests', 1, ['env:prod', 'host': '127.0.0.1']);
+monitor.increment('requests', 1, ['env:prod', 'host:127.0.0.1']);
 
 // Trigger an increment with tags as object
 monitor.increment('requests', 1, {env: 'prod', host: '127.0.0.1'});
 
 // Trigger a gauge event (`myProject.404s`)
-monitor.gauge('404s');
+monitor.gauge('404s', 10);
+
+// Trigger a gauge event with tags
+monitor.gauge('404s', 10, ['nice:tag']);
 
 // Time requests...
 var timer = monitor.timer('request.time');
