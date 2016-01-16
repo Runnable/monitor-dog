@@ -3,7 +3,7 @@
 ![Build Status](https://travis-ci.org/Runnable/monitor-dog.svg?branch=master)
 ![Dependency Status](https://david-dm.org/Runnable/monitor-dog.svg)
 ![devDependency Status](https://david-dm.org/Runnable/monitor-dog/dev-status.svg)
-
+[![Code Climate](https://codeclimate.com/github/Runnable/monitor-dog/badges/gpa.svg)](https://codeclimate.com/github/Runnable/monitor-dog)
 [![NPM](https://nodei.co/npm/monitor-dog.png?compact=true)](https://nodei.co/npm/monitor-dog)
 
 Wraps [dogstatsd](https://www.npmjs.com/package/node-dogstatsd) to provide
