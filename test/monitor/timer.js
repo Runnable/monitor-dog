@@ -51,6 +51,19 @@ describe('Monitor', function() {
       timer.stop();
     });
 
+    it('should call client histogram method with correct name when stopped', function (done) {
+      var timerName = 'timer';
+      var timerTags = { tag1: 'one' }
+      monitor.client.histogram.restore();
+      sinon.stub(monitor.client, 'histogram', function (name, duration, tags) {
+        expect(name).to.equal(monitor.prefix + '.' + timerName);
+        expect(tags).to.deep.equal([ 'tag1:one' ])
+        done();
+      });
+      var timer = monitor.timer(timerName, true, timerTags);
+      timer.stop();
+    });
+
     it('should report a realistic duration when stopped', function (done) {
       var duration = 60;
       var timer = monitor.timer('timer');
