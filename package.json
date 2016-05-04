@@ -29,15 +29,15 @@
   },
   "homepage": "https://github.com/Runnable/monitor-dog",
   "devDependencies": {
-    "code": "^1.4.0",
+    "code": "^2.2.1",
     "jshint": "^2.6.3",
-    "jsinspect": "^0.6.1",
-    "lab": "^5.5.1",
+    "jsinspect": "^0.8.0",
+    "lab": "^10.4.0",
     "sinon": "^1.14.1"
   },
   "dependencies": {
     "101": "^1.0.0",
-    "loadenv": "^1.0.3",
+    "loadenv": "^2.2.0",
     "node-dogstatsd": "0.0.6"
   }
 }
