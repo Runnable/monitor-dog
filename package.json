@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/Runnable/monitor-dog",
   "devDependencies": {
-    "code": "^1.4.0",
+    "code": "^4.0.0",
     "jshint": "^2.6.3",
     "jsinspect": "^0.6.1",
     "lab": "^5.5.1",
