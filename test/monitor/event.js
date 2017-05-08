@@ -28,11 +28,6 @@ describe('Monitor', function() {
   });
 
   describe('event', function() {
-    it('should throw an error when not given options', function(done) {
-      expect(monitor.event).throws();
-      done();
-    });
-
     it('should throw an error if the title is missing', function(done) {
       var error = null;
       try {
