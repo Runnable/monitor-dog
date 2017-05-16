@@ -1,6 +1,6 @@
 {
   "name": "monitor-dog",
-  "version": "1.5.2",
+  "version": "2.0.0",
   "description": "A helpful wrapper for dogstatsd.",
   "main": "index.js",
   "scripts": {
