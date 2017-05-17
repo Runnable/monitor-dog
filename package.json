@@ -31,7 +31,7 @@
   "devDependencies": {
     "code": "^1.4.0",
     "jshint": "^2.6.3",
-    "jsinspect": "^0.6.1",
+    "jsinspect": "^0.12.2",
     "lab": "^5.5.1",
     "sinon": "^1.14.1"
   },
